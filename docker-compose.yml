@@ -1,0 +1,84 @@
+services:
+
+    nginx:
+        build:
+            context: .
+            dockerfile: ./docker/nginx.Dockerfile
+        depends_on:
+            - php
+            - sqlite
+        container_name: nginx
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./src:/var/www/html
+
+    php:
+        build:
+            context: .
+            dockerfile: ./docker/php.Dockerfile
+        container_name: php
+        user: "1000:1000"
+        volumes:
+            - ./src:/var/www/html
+            - ./sqlite:/var/www/html/sqlite
+        depends_on:
+            - sqlite
+            
+    
+    node:
+        build:
+            context: .
+            dockerfile: ./docker/node.Dockerfile
+        ports:
+            - "3000:3000"
+        volumes:
+        - ./src:/var/www/html
+        working_dir: /var/www/html
+        command: ["npm", "start"]
+
+    sqlite:
+        image: nouchka/sqlite3:latest
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./sqlite:/root/db/
+
+
+    composer:
+        build:
+            context: .
+            dockerfile: ./docker/php.Dockerfile
+        container_name: laravel_composer
+        user: "1000:1000"
+        volumes:
+            - ./src:/var/www/html
+        working_dir: /var/www/html
+        entrypoint: ['composer']
+
+    artisan:
+        build:
+            context: .
+            dockerfile: ./docker/php.Dockerfile
+        container_name: laravel_artisan
+        volumes:
+            - ./src:/var/www/html
+        working_dir: /var/www/html
+        entrypoint: ['php', 'artisan']
+
+    npm:
+        image: node:current-alpine
+        container_name: laravel_npm
+        volumes:
+            - ./src:/var/www/html
+        working_dir: /var/www/html
+        entrypoint: ['npm']
+
+
+
+
+
+
+
+        
