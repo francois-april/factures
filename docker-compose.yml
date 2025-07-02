@@ -1,3 +1,6 @@
+networks:
+  factures:
+
 services:
 
     nginx:
@@ -13,6 +16,8 @@ services:
             - 443:443
         volumes:
             - ./src:/var/www/html
+        networks:
+            - factures
 
     php:
         build:
@@ -20,28 +25,22 @@ services:
             dockerfile: ./docker/php.Dockerfile
         container_name: php
         user: "1000:1000"
+        ports:
+            - "9000:9000"
         volumes:
             - ./src:/var/www/html
             - ./sqlite:/var/www/html/sqlite
         depends_on:
             - sqlite
-            
-    
-    node:
-        build:
-            context: .
-            dockerfile: ./docker/node.Dockerfile
-        ports:
-            - "3000:3000"
-        volumes:
-        - ./src:/var/www/html
-        working_dir: /var/www/html
-        command: ["npm", "start"]
+        networks:
+            - factures
 
     sqlite:
         image: nouchka/sqlite3:latest
         stdin_open: true
         tty: true
+        networks:
+            - factures
         volumes:
             - ./sqlite:/root/db/
 
@@ -56,6 +55,8 @@ services:
             - ./src:/var/www/html
         working_dir: /var/www/html
         entrypoint: ['composer']
+        networks:
+            - factures
 
     artisan:
         build:
@@ -66,15 +67,18 @@ services:
             - ./src:/var/www/html
         working_dir: /var/www/html
         entrypoint: ['php', 'artisan']
+        networks:
+            - factures
 
     npm:
         image: node:current-alpine
-        container_name: laravel_npm
+        container_name: npm
+        ports:
+            - "5173:5173"
         volumes:
             - ./src:/var/www/html
         working_dir: /var/www/html
         entrypoint: ['npm']
-
 
 
 
