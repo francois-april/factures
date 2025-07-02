@@ -21,11 +21,12 @@ Le style visuel de la page a été construit avec des templates de base de tailw
 Pour ce qui est de la base de données, j'ai décidé de placer le champs "discount_rate" au niveau de la facture, et non de ses lignes pour 2 raisons. 1) La remise s'applique pour l'instant sur la facture entière et 2) Si l'application évolue et permet éventuellement aussi les remises individuelles, ça simplifie les choses.
 Les seuls prix gardés en base de données sont ceux les prix unitaires des lignes de factures. Trois décimales sont gardées cau cas où on persiste éventuellement le prix payé, dans quel cas la remise pourrait engendrer des fractions de sous.
 
-## Ommissions
+## Omissions
 Je n'ai pas eu le temps d'implémenter l'authentification ou d'utiliser JSON:API
 La configuration de docker et me familiariser avec l'utilisation de Vue à travers Laravel, ne les ayant utilisé que séparément auparavant,
 m'a pris plus de temps que j'aurais souhaité. J'ai donc priorisé le fait d'avoir les fonctionnalités de base du site. Dans un contexte professionel où la sécurité est un enjeu, je n'aurais toutefois pas mis de côté l'authentification.
 Mon but était initialement d'utiliser axios pour communiquer entre le frontend et le backend à l'aide de resources JSON:API, mais ai décidé de spécifier la structure de données à la main dans le controlleur
+J'ai également omis de créer des tests dans le projet. Je suis normalement d'avis que ceux-ci sauvent au contraire du temps, mais vu la contrainte de temps, j'ai décidé de de pas risquer de m'y embourber.
 
 ## Suite
 Si j'avais à continuer le projet, je ferais les modifications nécessaires pour utiliser JSON:API avant d'aller plus loin, j'implémenterais l'aauthentification je rajouterais des validations frontend et backend sur la majorité des champs et je rendrais ceux-ci en lecture seule dépendemment du statut de la facture
