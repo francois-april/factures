@@ -23,15 +23,15 @@ class DatabaseSeeder extends Seeder
                 'status' => InvoiceStatus::SENT,
                 'issued_at' => Carbon::yesterday(),
                 'due_at' => Carbon::tomorrow(),
-        ])
-            );
+            ])
+        );
 
         InvoiceLine::factory()->count(5)->for(
             Invoice::factory()->create([
                 'status' => InvoiceStatus::DRAFT,
                 'issued_at' => Carbon::yesterday(),
                 'due_at' => Carbon::tomorrow(),
-        ])
-            );
+            ])
+        );
     }
 }

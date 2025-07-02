@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('invoice_id')->unsigned();
             $table->string('description');
             $table->integer('quantity')->unsigned();
-            $table->decimal('unit_price', 12, 2);
+            $table->decimal('unit_price', 12, 3);
             $table->timestamps();
 
             $table->foreign('invoice_id')->references('id')->on('invoices')->cascadeOnDelete();
