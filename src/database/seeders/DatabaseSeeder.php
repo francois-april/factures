@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\InvoiceStatus;
 use App\Models\Invoice;
-use App\Models\InvoiceLine;
 use App\Models\User;
 use Carbon\Carbon;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -18,20 +17,24 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        InvoiceLine::factory()->count(3)->for(
-            Invoice::factory()->create([
-                'status' => InvoiceStatus::SENT,
-                'issued_at' => Carbon::yesterday(),
-                'due_at' => Carbon::tomorrow(),
-            ])
-        );
+        Invoice::factory()->create([
+            'customer_name' => 'Test Name 1',
+            'currency' => 'CAD',
+            'discount_rate' => 25,
+            'status' => InvoiceStatus::DRAFT,
+            'issued_at' => Carbon::yesterday(),
+            'due_at' => Carbon::tomorrow(),
+        ]);
 
-        InvoiceLine::factory()->count(5)->for(
-            Invoice::factory()->create([
-                'status' => InvoiceStatus::DRAFT,
-                'issued_at' => Carbon::yesterday(),
-                'due_at' => Carbon::tomorrow(),
-            ])
-        );
+        
+
+        Invoice::factory()->create([
+            'customer_name' => 'Test Name 2',
+            'currency' => 'USD',
+            'discount_rate' => 50,
+            'status' => InvoiceStatus::SENT,
+            'issued_at' => Carbon::yesterday(),
+            'due_at' => Carbon::tomorrow(),
+        ]);
     }
 }
